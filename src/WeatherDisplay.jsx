@@ -18,11 +18,12 @@ const WeatherDisplay = ({
 	},
 }) => {
 	const [alts, setAlts] = useState({
-		time: false,
 		temp: false,
 		wind: false,
 		precip: false,
 	});
+
+	const date = new Date(alt_time * 1000);
 
 	function makeAlt(param) {
 		setAlts({
@@ -58,8 +59,38 @@ const WeatherDisplay = ({
 				>
 					°C
 				</button>
-				<img src={condition.icon} alt={condition.text + " image"} />
+				<img
+					src={condition ? condition.icon : ""}
+					alt={
+						condition ? condition.text + " image" : "Weather image"
+					}
+				/>
 			</div>
+			<span className="condition">
+				{condition ? condition.text : "unknown"}
+			</span>
+			<span className="location">
+				{city}, {region}, {country}
+			</span>
+			<span className="time">
+				{(() => {
+					const dayNames = [
+						"Sunday",
+						"Monday",
+						"Tuesday",
+						"Wednesday",
+						"Thursday",
+						"Friday",
+						"Saturday",
+					];
+					return dayNames[date.getDay()];
+				})()}
+				,{" "}
+				{date.toLocaleTimeString([], {
+					hour: "2-digit",
+					minute: "2-digit",
+				})}
+			</span>
 		</div>
 	);
 };
