@@ -50,6 +50,7 @@ function App() {
 			console.log(e);
 		}
 	}
+
 	return (
 		<>
 			<input
@@ -62,11 +63,11 @@ function App() {
 					}
 				}}
 			/>
-			{error ? (
+			{/* {error ? (
 				<img src={data} alt={search + " image"} />
 			) : (
 				<p>Error: {search} not found</p>
-			)}
+			)} */}
 		</>
 	);
 }
