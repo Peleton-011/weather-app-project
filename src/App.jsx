@@ -1,37 +1,55 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
 
 import api from "../api";
 
 function App() {
 	const [search, setSearch] = useState("cats");
-	const [img, setImg] = useState(0);
+	const [data, setData] = useState({});
 	const [error, setError] = useState(false);
-	const [offset, setOffset] = useState(0);
 	async function fetchNew() {
-        try {
-        
-		let res = await fetch(
-			"https://api.giphy.com/v1/gifs/translate?api_key=" +
-				api.key +
-				"&s=" +
-				search +
-				"&weirdness=" +
-				offset,
-			{ mode: "cors" }
-		)
-        if (res.status === 200) setError(true);
-		res = await res.json();
-		setImg(res.data.images.original.url);
-        } catch (e) {
-            setError(true);
-            console.log(e);
-        }
-    }
-	useEffect(() => {
-		fetchNew();
-		setOffset(0);
-	}, [search]);
+		try {
+			let res = await fetch(
+				"http://api.weatherapi.com/v1/current.json?key=" +
+					api.key +
+					"&q=" +
+					search,
+				{ mode: "cors" }
+			);
+			res = await res.json();
+			const {
+				location: { name, localtime, country, localtime_epoch, region },
+				current: {
+					temp_c,
+					temp_f,
+					condition,
+					wind_mph,
+					wind_kph,
+					is_day,
+					precip_in,
+					precip_mm,
+				},
+			} = res;
+			setData({
+				city: name,
+				time: localtime,
+				country: country,
+				region: region,
+				temp: temp_c,
+				condition: condition,
+				wind: wind_kph,
+				is_day: is_day,
+				precip: precip_mm,
+				alt_time: localtime_epoch,
+				alt_temp: temp_f,
+				alt_wind: wind_mph,
+				alt_precip: precip_in,
+			});
+		} catch (e) {
+			setError(true);
+			console.log(e);
+		}
+	}
 	return (
 		<>
 			<input
@@ -40,24 +58,15 @@ function App() {
 				onChange={(e) => setSearch(e.target.value)}
 				onKeyUp={(e) => {
 					if (e.key === "Enter") {
-						setOffset(offset + 1);
 						fetchNew();
 					}
 				}}
 			/>
 			{error ? (
-				<img src={img} alt={search + " image"} />
+				<img src={data} alt={search + " image"} />
 			) : (
 				<p>Error: {search} not found</p>
 			)}
-			<button
-				onClick={(e) => {
-					setOffset(offset + 1);
-					fetchNew();
-				}}
-			>
-				Regen
-			</button>
 		</>
 	);
 }
