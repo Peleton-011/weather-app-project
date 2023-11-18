@@ -43,6 +43,7 @@ const WeatherDisplay = ({
 			<div>
 				<h2>{alts.temp ? alt_temp : temp}</h2>
 				<button
+					className={alts.temp ? "active" : ""}
 					onClick={() => {
 						makeAlt("temp");
 					}}
@@ -50,12 +51,14 @@ const WeatherDisplay = ({
 					°F
 				</button>
 				<button
+					className={alts.temp ? "" : "active"}
 					onClick={() => {
 						removeAlt("temp");
 					}}
 				>
 					°C
 				</button>
+				<img src={condition.icon} alt={condition.text + " image"} />
 			</div>
 		</div>
 	);
