@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-
+import WeatherDisplay from "./WeatherDisplay";
 import api from "../api";
 
 function App() {
@@ -68,6 +68,7 @@ function App() {
 			) : (
 				<p>Error: {search} not found</p>
 			)} */}
+			{data && <WeatherDisplay data={data} />}
 		</>
 	);
 }
