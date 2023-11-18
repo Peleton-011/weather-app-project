@@ -28,6 +28,7 @@ function App() {
 					is_day,
 					precip_in,
 					precip_mm,
+					humidity,
 				},
 			} = res;
 			setData({
@@ -40,6 +41,7 @@ function App() {
 				wind: wind_kph,
 				is_day: is_day,
 				precip: precip_mm,
+                humidity: humidity,
 				alt_time: localtime_epoch,
 				alt_temp: temp_f,
 				alt_wind: wind_mph,

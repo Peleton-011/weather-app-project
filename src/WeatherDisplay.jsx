@@ -11,6 +11,7 @@ const WeatherDisplay = ({
 		wind,
 		is_day,
 		precip,
+		humidity,
 		alt_time,
 		alt_temp,
 		alt_wind,
@@ -90,6 +91,12 @@ const WeatherDisplay = ({
 					hour: "2-digit",
 					minute: "2-digit",
 				})}
+			</span>
+			<span>
+				Wind: {alts.wind ? alt_wind + " mph" : wind + " km/h"} |
+				Precipitation:{" "}
+				{alts.precip ? alt_precip + " in" : precip + " mm"} | Humidity:
+				{humidity + "%"}
 			</span>
 		</div>
 	);
