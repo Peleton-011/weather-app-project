@@ -1,17 +1,24 @@
 import { useState } from "react";
 import "./App.css";
 import WeatherDisplay from "./WeatherDisplay";
-import api from "../api";
 
 function App() {
 	const [search, setSearch] = useState("cats");
 	const [data, setData] = useState({});
 	const [error, setError] = useState(false);
+
+	const apiKey = process.env.WEATHER_API_KEY;  // Get API key from environment
+
+	if (!apiKey) {
+		console.error("API key is missing.");
+		return;
+	}
+	
 	async function fetchNew() {
 		try {
 			let res = await fetch(
 				"http://api.weatherapi.com/v1/current.json?key=" +
-					api.key +
+					apiKey +
 					"&q=" +
 					search,
 				{ mode: "cors" }
