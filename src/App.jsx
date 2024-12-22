@@ -7,13 +7,12 @@ function App() {
 	const [data, setData] = useState({});
 	const [error, setError] = useState(false);
 
-	const apiKey = process.env.WEATHER_API_KEY;  // Get API key from environment
-
+	const apiKey = import.meta.env.VITE_WEATHER_API_KEY; // Get API key from environment
 	if (!apiKey) {
 		console.error("API key is missing.");
 		return;
 	}
-	
+
 	async function fetchNew() {
 		try {
 			let res = await fetch(
@@ -48,7 +47,7 @@ function App() {
 				wind: wind_kph,
 				is_day: is_day,
 				precip: precip_mm,
-                humidity: humidity,
+				humidity: humidity,
 				alt_time: localtime_epoch,
 				alt_temp: temp_f,
 				alt_wind: wind_mph,
